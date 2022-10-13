@@ -1,27 +1,53 @@
 package tictactoe;
 
-import java.util.Scanner;
-
 public class Main {
+    static boolean isRunningGamePart;
     static boolean isRunning = true;
 
     public static void main(String[] args) {
         Field gameField = new Field(3, 3);
-        Scanner scanner = new Scanner(System.in);
-        gameField.fillEmptyField();
-        gameField.printField();
+        Player player1 = null;
+        Player player2 = null;
         while (isRunning) {
-            Menu.coordinatesRequest();
-            String coordinatesStr = scanner.nextLine();
-            if (gameField.isValidCoordinates(coordinatesStr)) {
-                moveAction(coordinatesStr, gameField);
-            } else {
-                continue;
+            Menu.showMainMenu();
+            String[] arguments;
+            boolean isNoLegalArguments = true;
+            while (isNoLegalArguments) {
+                arguments = Menu.getInputArguments();
+                if (arguments[0].equals("start")) {
+                    player1 = new Player(arguments[1], gameField);
+                    player2 = new Player(arguments[2], gameField);
+                    isNoLegalArguments = false;
+                } else if (arguments[0].equals("exit")) {
+                    return;
+                } else {
+                    System.out.println("Bad parameters!");
+                }
             }
-            AIForGame ai = new AIForGame();
-            coordinatesStr = ai.getAiMove(gameField);
-            moveAction(coordinatesStr, gameField);
+            isRunningGamePart = true;
+            gameField.fillEmptyField();
+            gameField.printField();
 
+            while (isRunningGamePart) {
+                String coordinatesStr = player1.getMoves();
+                if (gameField.isValidCoordinates(coordinatesStr)) {
+                    moveAction(coordinatesStr, gameField);
+                    if (gameField.isGameEnded()) {
+                        isRunningGamePart = false;
+                        continue;
+                    }
+                } else {
+                    continue;
+                }
+                coordinatesStr = player2.getMoves();
+                if (gameField.isValidCoordinates(coordinatesStr)) {
+                    moveAction(coordinatesStr, gameField);
+                }
+                if (gameField.isGameEnded()) {
+                    isRunningGamePart = false;
+                }
+
+            }
         }
 
     }
@@ -29,9 +55,6 @@ public class Main {
     private static void moveAction(String coordinatesStr, Field gameField) {
         gameField.setPlayerMove(coordinatesStr);
         gameField.printField();
-        if (gameField.isGameEnded()) {
-            isRunning = false;
-        }
     }
 
 
