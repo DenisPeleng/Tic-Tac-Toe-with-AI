@@ -8,21 +8,30 @@ public class Main {
     public static void main(String[] args) {
         Field gameField = new Field(3, 3);
         Scanner scanner = new Scanner(System.in);
-        String strMoves = scanner.nextLine();
-        gameField.fillField(strMoves);
+        gameField.fillEmptyField();
         gameField.printField();
         while (isRunning) {
             Menu.coordinatesRequest();
             String coordinatesStr = scanner.nextLine();
             if (gameField.isValidCoordinates(coordinatesStr)) {
-                gameField.setPlayerMove(coordinatesStr);
-                gameField.printField();
-                if (gameField.isGameEnded()) {
-                    isRunning = false;
-                }
+                moveAction(coordinatesStr, gameField);
+            } else {
+                continue;
             }
+            AIForGame ai = new AIForGame();
+            coordinatesStr = ai.getAiMove(gameField);
+            moveAction(coordinatesStr, gameField);
+
         }
 
+    }
+
+    private static void moveAction(String coordinatesStr, Field gameField) {
+        gameField.setPlayerMove(coordinatesStr);
+        gameField.printField();
+        if (gameField.isGameEnded()) {
+            isRunning = false;
+        }
     }
 
 

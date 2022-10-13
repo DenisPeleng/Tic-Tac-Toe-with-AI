@@ -1,8 +1,10 @@
 package tictactoe;
 
+import java.util.ArrayList;
+
 public class Field {
     String[][] field;
-    String currentPlayerSign;
+    String currentPlayerSign = "X";
     boolean isWinX = false;
     boolean isWinO = false;
 
@@ -30,11 +32,7 @@ public class Field {
     }
 
     void fillEmptyField() {
-        StringBuilder strMoves = new StringBuilder();
-        for (int i = 0; i < field.length * field.length; i++) {
-            strMoves.append("_");
-        }
-        fillField(strMoves.toString());
+        fillField("_".repeat(Math.max(0, field.length * field.length)));
     }
 
     void fillField(String strMoves) {
@@ -65,17 +63,19 @@ public class Field {
         isWinDiagonal();
         if (isWinO && isWinX) {
             System.out.println("It's impossible");
+            return true;
         } else if (isWinX) {
             System.out.println("X wins");
+            return true;
         } else if (isWinO) {
             System.out.println("O wins");
+            return true;
         } else if (!isMoveAvailable()) {
             System.out.println("Draw");
+            return true;
         } else {
-            System.out.println("Game not finished");
+            return false;
         }
-
-        return true;
     }
 
     private void isWinVertical() {
@@ -191,13 +191,23 @@ public class Field {
     }
 
     private boolean isMoveAvailable() {
-        for (String[] strings : field) {
-            for (String string : strings) {
-                if (string.isBlank()) {
-                    return true;
+        return getAvailableMoves().size() > 0;
+    }
+
+
+    ArrayList<String> getAvailableMoves() {
+        ArrayList<String> availableMoves = new ArrayList<>();
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[i].length; j++) {
+                if (field[i][j].isBlank()) {
+                    int x = i + 1;
+                    int y = j + 1;
+                    availableMoves.add(x + " " + y);
                 }
             }
         }
-        return false;
+        return availableMoves;
     }
+
+
 }
