@@ -37,7 +37,7 @@ public class Menu {
 
     private static boolean isValidArgumentDifficult(String arg) {
         return switch (arg) {
-            case "easy", "user" -> true;
+            case "easy", "user","medium" -> true;
             default -> false;
         };
     }

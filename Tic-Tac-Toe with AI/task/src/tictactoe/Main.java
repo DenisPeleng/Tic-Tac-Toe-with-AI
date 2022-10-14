@@ -33,6 +33,7 @@ public class Main {
                 if (gameField.isValidCoordinates(coordinatesStr)) {
                     moveAction(coordinatesStr, gameField);
                     if (gameField.isGameEnded()) {
+                        System.out.println(gameField.resultOfGame);
                         isRunningGamePart = false;
                         continue;
                     }
@@ -42,11 +43,11 @@ public class Main {
                 coordinatesStr = player2.getMoves();
                 if (gameField.isValidCoordinates(coordinatesStr)) {
                     moveAction(coordinatesStr, gameField);
+                    if (gameField.isGameEnded()) {
+                        System.out.println(gameField.resultOfGame);
+                        isRunningGamePart = false;
+                    }
                 }
-                if (gameField.isGameEnded()) {
-                    isRunningGamePart = false;
-                }
-
             }
         }
 

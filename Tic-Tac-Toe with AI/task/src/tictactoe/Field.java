@@ -7,9 +7,25 @@ public class Field {
     String currentPlayerSign = "X";
     boolean isWinX = false;
     boolean isWinO = false;
+    String winner;
+    String resultOfGame;
 
     Field(int x, int y) {
         field = new String[x][y];
+    }
+
+    Field(Field field) {
+        String[][] copy = new String[field.field.length][];
+        for (int i = 0; i < field.field.length; i++) {
+            copy[i] = new String[field.field[i].length];
+            System.arraycopy(field.field[i], 0, copy[i], 0, field.field[i].length);
+        }
+        this.field = copy;
+        this.currentPlayerSign = field.currentPlayerSign;
+        this.winner = field.winner;
+        this.isWinX = field.isWinX;
+        this.isWinO = field.isWinO;
+        this.resultOfGame = field.resultOfGame;
     }
 
     void printField() {
@@ -62,16 +78,18 @@ public class Field {
         isWinHorizontal();
         isWinDiagonal();
         if (isWinO && isWinX) {
-            System.out.println("It's impossible");
+            resultOfGame = "It's impossible";
             return true;
         } else if (isWinX) {
-            System.out.println("X wins");
+            winner = "X";
+            resultOfGame = "X wins";
             return true;
         } else if (isWinO) {
-            System.out.println("O wins");
+            resultOfGame = "O wins";
+            winner = "O";
             return true;
         } else if (!isMoveAvailable()) {
-            System.out.println("Draw");
+            resultOfGame = "Draw";
             return true;
         } else {
             return false;
@@ -89,15 +107,16 @@ public class Field {
                     counterO++;
                 }
             }
+            if (counterX == field.length) {
+                isWinX = true;
+            }
+            if (counterO == field.length) {
+                isWinO = true;
+            }
             counterX = 0;
             counterO = 0;
         }
-        if (counterX == field.length) {
-            isWinX = true;
-        }
-        if (counterO == field.length) {
-            isWinO = true;
-        }
+
     }
 
     private void isWinHorizontal() {

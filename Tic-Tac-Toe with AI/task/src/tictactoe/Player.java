@@ -16,13 +16,13 @@ public class Player {
         String moves = "";
         switch (typePlayer) {
             case "user" -> moves = getMovesUser();
-            case "easy" -> moves = getMovesAi();
+            case "easy", "medium" -> moves = getMovesAi();
         }
         return moves;
     }
 
     private String getMovesAi() {
-        AIForGame ai = new AIForGame(typePlayer);
+        AiForGame ai = new AiForGame(typePlayer);
         return ai.getAiMove(gameField);
     }
 
