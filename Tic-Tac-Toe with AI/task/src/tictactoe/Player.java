@@ -16,7 +16,7 @@ public class Player {
         String moves = "";
         switch (typePlayer) {
             case "user" -> moves = getMovesUser();
-            case "easy", "medium" -> moves = getMovesAi();
+            case "easy", "medium","hard" -> moves = getMovesAi();
         }
         return moves;
     }
