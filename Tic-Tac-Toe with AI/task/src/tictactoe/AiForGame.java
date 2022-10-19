@@ -5,14 +5,14 @@ import java.util.Random;
 
 public class AiForGame {
 
-    String difficult;
-    String playerSign;
+    private String difficult;
+    private String playerSign;
 
     AiForGame(String difficult) {
         setDifficult(difficult);
     }
 
-    public void setDifficult(String difficult) {
+    private void setDifficult(String difficult) {
         this.difficult = difficult;
     }
 
@@ -41,7 +41,7 @@ public class AiForGame {
 
     private String getAiMoveHard(Field gameField) {
         Field testField = new Field(gameField);
-        playerSign = gameField.currentPlayerSign;
+        playerSign = gameField.getCurrentPlayerSign();
         minMaxMethod(testField);
         String[] newMove = minMaxMethod(testField);
         return newMove[1];
@@ -69,7 +69,7 @@ public class AiForGame {
         ) {
             Field testField = new Field(gameField);
             testField.setPlayerMove(currentMove);
-            if (testField.isGameEnded() && testField.currentPlayerSign.equals(testField.winner)) {
+            if (testField.isGameEnded() && testField.getCurrentPlayerSign().equals(testField.getWinner())) {
                 return currentMove;
             }
         }
@@ -78,14 +78,14 @@ public class AiForGame {
 
     private String checkAvailableMovesToNotLose(Field gameField) {
         ArrayList<String> availableMoves = gameField.getAvailableMoves();
-        String currentOpponent = gameField.currentPlayerSign.equals("X") ? "O" : "X";
+        String currentOpponent = gameField.getCurrentPlayerSign().equals("X") ? "O" : "X";
         for (String currentMove : availableMoves
         ) {
 
             Field testField = new Field(gameField);
-            testField.currentPlayerSign = currentOpponent;
+            testField.setCurrentPlayerSign(currentOpponent);
             testField.setPlayerMove(currentMove);
-            if (testField.isGameEnded() && currentOpponent.equals(testField.winner)) {
+            if (testField.isGameEnded() && currentOpponent.equals(testField.getWinner())) {
                 return currentMove;
             }
         }
@@ -111,7 +111,7 @@ public class AiForGame {
         }
         int bestMoveIndex = 0;
         String bestScoreStr = "";
-        if (testField.currentPlayerSign.equals(playerSign)) {
+        if (testField.getCurrentPlayerSign().equals(playerSign)) {
             int bestScore = -1000;
             for (int i = 0; i < movesArr.size(); i++) {
                 if (scoresArr.get(i) > bestScore) {
@@ -138,9 +138,9 @@ public class AiForGame {
 
     private int score(Field testFieldMinMax) {
         String opponent = playerSign.equals("X") ? "O" : "X";
-        if (playerSign.equals(testFieldMinMax.winner)) {
+        if (playerSign.equals(testFieldMinMax.getWinner())) {
             return 10;
-        } else if (opponent.equals(testFieldMinMax.winner)) {
+        } else if (opponent.equals(testFieldMinMax.getWinner())) {
             return -10;
         } else {
             return 0;

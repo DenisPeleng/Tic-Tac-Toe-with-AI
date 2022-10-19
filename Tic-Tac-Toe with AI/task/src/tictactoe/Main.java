@@ -9,7 +9,7 @@ public class Main {
         Player player1 = null;
         Player player2 = null;
         while (isRunning) {
-            Menu.showMainMenu();
+            System.out.println(Menu.MAIN_MENU_TEXT);
             String[] arguments;
             boolean isNoLegalArguments = true;
             while (isNoLegalArguments) {
@@ -33,7 +33,7 @@ public class Main {
                 if (gameField.isValidCoordinates(coordinatesStr)) {
                     moveAction(coordinatesStr, gameField);
                     if (gameField.isGameEnded()) {
-                        System.out.println(gameField.resultOfGame);
+                        System.out.println(gameField.getResultOfGame());
                         isRunningGamePart = false;
                         continue;
                     }
@@ -44,7 +44,7 @@ public class Main {
                 if (gameField.isValidCoordinates(coordinatesStr)) {
                     moveAction(coordinatesStr, gameField);
                     if (gameField.isGameEnded()) {
-                        System.out.println(gameField.resultOfGame);
+                        System.out.println(gameField.getResultOfGame());
                         isRunningGamePart = false;
                     }
                 }

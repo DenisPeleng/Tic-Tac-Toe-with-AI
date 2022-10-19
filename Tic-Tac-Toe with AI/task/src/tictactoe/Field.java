@@ -3,12 +3,12 @@ package tictactoe;
 import java.util.ArrayList;
 
 public class Field {
-    String[][] field;
-    String currentPlayerSign = "X";
-    boolean isWinX = false;
-    boolean isWinO = false;
-    String winner;
-    String resultOfGame;
+    private final String[][] field;
+    private String currentPlayerSign = "X";
+    private boolean isWinX = false;
+    private boolean isWinO = false;
+    private String winner;
+    private String resultOfGame;
 
     Field(int x, int y) {
         field = new String[x][y];
@@ -26,6 +26,23 @@ public class Field {
         this.isWinX = field.isWinX;
         this.isWinO = field.isWinO;
         this.resultOfGame = field.resultOfGame;
+    }
+
+
+    String getCurrentPlayerSign() {
+        return currentPlayerSign;
+    }
+
+    void setCurrentPlayerSign(String currentPlayerSign) {
+        this.currentPlayerSign = currentPlayerSign;
+    }
+
+    String getWinner() {
+        return winner;
+    }
+
+    String getResultOfGame() {
+        return resultOfGame;
     }
 
     void printField() {

@@ -3,16 +3,9 @@ package tictactoe;
 import java.util.Scanner;
 
 public class Menu {
+    static String MAIN_MENU_TEXT = "Input command:";
+    static String GET_COORDINATES_TEXT = "Enter the coordinates:";
     private static final Scanner scanner = new Scanner(System.in);
-
-    public static void showMainMenu() {
-        System.out.println("Input command:");
-    }
-
-    public static void coordinatesRequest() {
-        System.out.println("Enter the coordinates:");
-
-    }
 
     public static String[] getInputArguments() {
         String[] arguments = new String[3];
@@ -41,5 +34,6 @@ public class Menu {
             default -> false;
         };
     }
+
 
 }

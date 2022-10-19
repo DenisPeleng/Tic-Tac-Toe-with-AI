@@ -3,8 +3,8 @@ package tictactoe;
 import java.util.Scanner;
 
 public class Player {
-    String typePlayer;
-    Field gameField;
+    private final String typePlayer;
+    private final Field gameField;
     private static final Scanner scanner = new Scanner(System.in);
 
     Player(String type, Field gameField) {
@@ -16,7 +16,7 @@ public class Player {
         String moves = "";
         switch (typePlayer) {
             case "user" -> moves = getMovesUser();
-            case "easy", "medium","hard" -> moves = getMovesAi();
+            case "easy", "medium", "hard" -> moves = getMovesAi();
         }
         return moves;
     }
@@ -27,7 +27,7 @@ public class Player {
     }
 
     private String getMovesUser() {
-        Menu.coordinatesRequest();
+        System.out.println(Menu.GET_COORDINATES_TEXT);
         return scanner.nextLine();
 
     }
